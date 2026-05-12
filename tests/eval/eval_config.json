@@ -1,0 +1,50 @@
+{
+  "criteria": {
+    "rubric_based_tool_use_quality_v1": {
+      "threshold": 0.7,
+      "judgeModelOptions": {
+        "judgeModel": "gemini-flash-latest",
+        "numSamples": 1
+      },
+      "rubrics": [
+        {
+          "rubricId": "correct_tools",
+          "rubricContent": { "textProperty": "The agent calls the correct tools: append_to_grocery_doc for 'add to list' / 'remember' requests (NOT store_graphql for adding), read_grocery_doc for 'what's on my list', store_graphql for product search. For seasonal queries the agent may use google_search or answer from its own knowledge. No tools should be called for greetings or small talk." }
+        },
+        {
+          "rubricId": "list_vs_cart",
+          "rubricContent": { "textProperty": "The agent correctly distinguishes between the grocery doc list (append_to_grocery_doc) and the shopping cart (store_graphql add to cart mutation). 'Add X to the list' must only use append_to_grocery_doc. 'Add X to the cart' uses store_graphql to search then add." }
+        },
+        {
+          "rubricId": "no_hallucination",
+          "rubricContent": { "textProperty": "The agent does not fabricate product names, prices, or availability. All product info comes from tool results." }
+        }
+      ]
+    },
+    "rubric_based_final_response_quality_v1": {
+      "threshold": 0.7,
+      "judgeModelOptions": {
+        "judgeModel": "gemini-flash-latest",
+        "numSamples": 1
+      },
+      "rubrics": [
+        {
+          "rubricId": "conciseness",
+          "rubricContent": { "textProperty": "For simple messages (greetings, confirmations, 'add to list'), the response is 1-2 sentences max. No bullet points, headers, or unnecessary detail. Only shopping sessions warrant structured responses." }
+        },
+        {
+          "rubricId": "english_only",
+          "rubricContent": { "textProperty": "The agent always responds in English regardless of input language." }
+        },
+        {
+          "rubricId": "relevance",
+          "rubricContent": { "textProperty": "The response directly addresses the user's request without going off on tangents or starting workflows the user didn't ask for." }
+        },
+        {
+          "rubricId": "diet_compliance",
+          "rubricContent": { "textProperty": "Recipe suggestions follow the variety mandate (no repeated main protein), favor seasonal ingredients, and respect the dietary preferences in the user's grocery doc." }
+        }
+      ]
+    }
+  }
+}

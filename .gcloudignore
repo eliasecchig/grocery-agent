@@ -1,0 +1,15 @@
+.venv/
+.adk/
+.env
+__pycache__/
+*.pyc
+terraform/
+tests/
+scripts/
+docs/
+.git/
+.gitignore
+README.md
+Makefile
+CLAUDE.md
+.claude/
